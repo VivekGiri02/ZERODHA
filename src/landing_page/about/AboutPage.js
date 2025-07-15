@@ -16,17 +16,17 @@ function AboutPages() {
                     style={{ lineHeight: "1.8", fontSize: "1.2em" }}
                 >
                     <div className="text-center">
-                        <img src="media/images/Nikhil.jpg" style={{ borderRadius: "100%", width: "250px" }} />
+                        <img src="media/images/Nikhil.jpg" alt="Nikhil Kamath" style={{ borderRadius: "100%", width: "250px" }} />
                         <h5 className="mt-3">Nikhil Kamath</h5>
                         <h6 className="text-muted">Co-founder & CFO</h6>
                     </div><br/><br/><br/><br/><br/><br/><br/><br/>
                     <div className="text-center">
-                        <img src="media/images/kailash.jpg" style={{ borderRadius: "100%", width: "250px" }} />
+                        <img src="media/images/kailash.jpg" alt="Kailash Nadh" style={{ borderRadius: "100%", width: "250px" }} />
                         <h5 className="mt-3">Dr. Kailash Nadh</h5>
                         <h6 className="text-muted">CTO</h6>
                     </div><br/><br/><br/><br/>
                     <div className="text-center">
-                        <img src="media/images/Venu.jpg" style={{ borderRadius: "100%", width: "250px" }} />
+                        <img src="media/images/Venu.jpg" alt="Venu Madhav" style={{ borderRadius: "100%", width: "250px" }} />
                         <h5 className="mt-3">Venu Madhav</h5>
                         <h6 className="text-muted">COO</h6>
                     </div>
@@ -38,24 +38,24 @@ function AboutPages() {
                     style={{ lineHeight: "1.8", fontSize: "1.2em" }}
                 >
                     <div className="text-center">
-                        <img src="media/images/Hanan.jpg" style={{ borderRadius: "100%", width: "250px" }} />
+                        <img src="media/images/Hanan.jpg" alt="Hanan Delvi" style={{ borderRadius: "100%", width: "250px" }} />
                         <h5 className="mt-3">Hanan Delvi</h5>
                         <h6 className="text-muted">COO</h6>
                     </div><br/><br/><br/><br/><br/><br/><br/><br/>
                     <div className="text-center">
-                        <img src="media/images/Seema.jpg" style={{ borderRadius: "100%", width: "250px" }} />
+                        <img src="media/images/Seema.jpg" alt="Seema Patil" style={{ borderRadius: "100%", width: "250px" }} />
                         <h5 className="mt-3">DSeema Patil</h5>
                         <h6 className="text-muted">Director</h6>
                     </div><br/><br/><br/><br/>
                     <div className="text-center">
-                        <img src="media/images/karthik.jpg" style={{ borderRadius: "100%", width: "250px" }} />
+                        <img src="media/images/karthik.jpg" alt="Karthik Rangappa" style={{ borderRadius: "100%", width: "250px" }} />
                         <h5 className="mt-3">Karthik Rangappa</h5>
                         <h6 className="text-muted">Chief of Education</h6>
                     </div>
                 </div>
             </div>
             <div className='text-center , mb-5'>
-                <img src='media/images/Austin.jpg' style={{ borderRadius: "100%" , width: "250px"}} />
+                <img src='media/images/Austin.jpg' alt="Austin Prakesh" style={{ borderRadius: "100%" , width: "250px"}} />
                 <h5 className="mt-5">Austin Prakesh</h5>
                 <h6 className='text-muted'>Director Strategy</h6>
             </div>
