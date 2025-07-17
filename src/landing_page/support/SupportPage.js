@@ -9,7 +9,6 @@ function SupportPage() {
         <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <NavBar />
         <Hero />
-        <h1>SupportPage</h1>
         <CreateTicket />
         <Footer />
         </div>

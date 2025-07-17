@@ -30,7 +30,7 @@ function ProductPage() {
             />
 
             <Leftimage imageURL="media/images/varsity.png"  productName="Varsity mobile" productDesription="An easy to grasp, collection of stock market lessons with in-depth coverage and illustrations. Content is broken down into bite-size cards to help you learn on the go." googlePlay="" appStore="" />
-            <h4 className='text-center ' ><a style={{ textDecoration: "none" }}>Want to know more about our technology stack? Check out the <a href="" style={{ textDecoration: "none" }}>Zerodha.tech </a>blog.</a></h4>
+            <h4 className='text-center mt-5' ><a style={{ textDecoration: "none" }}>Want to know more about our technology stack? Check out the <a href="" style={{ textDecoration: "none" }}>Zerodha.tech </a>blog.</a></h4>
             <Universe />
         <Footer/>
         </>

@@ -8,10 +8,41 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.nav-item{
+.nav-item {
   margin-left: 40px;
+}
+
+#supportHero {
+  background-color: rgb(56, 126, 209);
+  color: white;
+  padding-bottom: 50px;
+}
+
+#supportWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 150px;
+  align-items: center;
+}
+
+#supportHero a {
+  color: white;
+  text-decoration: underline;
+}
+
+#searchBoxWrapper {
+  margin-top: 20px;
+}
+
+#supportHero input {
+  padding: 12px 20px;
+  border-width: 2px;
+  width: 60%;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
