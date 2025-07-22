@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../Navbar';
 import Footer from '../Footer';
+import Login from './login';
 
 function Signup() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showLogin, setShowLogin] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch("http://localhost:3000/signup", {
+            const res = await fetch("http://localhost:3002/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password })
@@ -19,13 +30,19 @@ function Signup() {
             const data = await res.json();
             if (res.ok) {
                 alert("Signup successful!");
+                localStorage.setItem("user", JSON.stringify({ email }));
+                navigate('/');
             } else {
-                alert(`Error: ${data.error || "Invalid data"}`);
+                alert(`Error: ${data.message || "Invalid data"}`);
             }
         } catch (err) {
             alert("Something went wrong!");
         }
     };
+
+    if (showLogin) {
+        return <Login />;
+    }
 
     return (
         <div className="d-flex flex-column justify-content-between" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
@@ -61,12 +78,13 @@ function Signup() {
                         required
                     />
 
-                    <button type="submit" className="btn btn-primary w-100">
-                        Signup
-                    </button>
+                    <button type="submit" className="btn btn-primary w-100">Signup</button>
 
                     <p className="text-center mt-3">
-                        Already have an account? <a href="/login" className="text-primary">Login</a>
+                        Already have an account?{" "}
+                        <button type="button" className="btn btn-link text-primary p-0" onClick={() => setShowLogin(true)}>
+                            Login
+                        </button>
                     </p>
                 </form>
             </main>

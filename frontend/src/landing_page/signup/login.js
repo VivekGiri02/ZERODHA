@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import for redirection
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../Navbar';
 import Footer from '../Footer';
 
@@ -8,12 +8,17 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            navigate('/');
+        }
+    }, [navigate]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
-
         try {
-            // THE FIX: Use the correct backend URL and path
-            const res = await fetch("http://localhost:3002/api/auth/login", {
+            const res = await fetch("http://localhost:3002/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })
@@ -22,15 +27,14 @@ function Login() {
             const data = await res.json();
             if (res.ok) {
                 alert("Login successful!");
-                localStorage.setItem("token", data.token); // This is correct
-                // No need to store userId separately, the token has it.
-                navigate('/'); // redirect to homepage or dashboard
+                localStorage.setItem("user", JSON.stringify({ email }));
+                navigate('/');
             } else {
                 alert(`Error: ${data.message || "Invalid credentials"}`);
             }
         } catch (err) {
             console.error(err);
-            alert("Something went wrong! Is the backend server running?");
+            alert("Something went wrong!");
         }
     };
 
@@ -59,9 +63,7 @@ function Login() {
                         required
                     />
 
-                    <button type="submit" className="btn btn-success w-100">
-                        Login
-                    </button>
+                    <button type="submit" className="btn btn-success w-100">Login</button>
 
                     <p className="text-center mt-3">
                         Don't have an account? <a href="/signup" className="text-primary">Signup</a>
