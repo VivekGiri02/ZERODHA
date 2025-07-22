@@ -21,7 +21,7 @@ function Signup() {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch("http://localhost:3002/signup", {
+            const res = await fetch("https://zerodha-backend-al7p.onrender.com", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password })
