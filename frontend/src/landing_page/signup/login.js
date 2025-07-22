@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import for redirection
 import NavBar from '../Navbar';
 import Footer from '../Footer';
 
-function Signup() {
-    const [username, setUsername] = useState('');
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSignup = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+
         try {
-            const res = await fetch("http://localhost:3000/signup", {
+            // THE FIX: Use the correct backend URL and path
+            const res = await fetch("http://localhost:3002/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, email, password })
+                body: JSON.stringify({ email, password })
             });
 
             const data = await res.json();
             if (res.ok) {
-                alert("Signup successful!");
+                alert("Login successful!");
+                localStorage.setItem("token", data.token); // This is correct
+                // No need to store userId separately, the token has it.
+                navigate('/'); // redirect to homepage or dashboard
             } else {
-                alert(`Error: ${data.error || "Invalid data"}`);
+                alert(`Error: ${data.message || "Invalid credentials"}`);
             }
         } catch (err) {
-            alert("Something went wrong!");
+            console.error(err);
+            alert("Something went wrong! Is the backend server running?");
         }
     };
 
@@ -31,17 +38,8 @@ function Signup() {
         <div className="d-flex flex-column justify-content-between" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
             <NavBar />
             <main className="d-flex justify-content-center align-items-center p-4" style={{ flex: 1 }}>
-                <form onSubmit={handleSignup} className="bg-white p-4 rounded shadow" style={{ maxWidth: "400px", width: "100%" }}>
-                    <h2 className="text-center mb-4">Signup</h2>
-
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        className="form-control mb-3"
-                        required
-                    />
+                <form onSubmit={handleLogin} className="bg-white p-4 rounded shadow" style={{ maxWidth: "400px", width: "100%" }}>
+                    <h2 className="text-center mb-4">Login</h2>
 
                     <input
                         type="email"
@@ -61,12 +59,12 @@ function Signup() {
                         required
                     />
 
-                    <button type="submit" className="btn btn-primary w-100">
-                        Signup
+                    <button type="submit" className="btn btn-success w-100">
+                        Login
                     </button>
 
                     <p className="text-center mt-3">
-                        Already have an account? <a href="/login" className="text-primary">Login</a>
+                        Don't have an account? <a href="/signup" className="text-primary">Signup</a>
                     </p>
                 </form>
             </main>
@@ -75,4 +73,4 @@ function Signup() {
     );
 }
 
-export default Signup;
+export default Login;
