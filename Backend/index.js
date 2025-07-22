@@ -4,11 +4,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const { HoldingsModel } = require("./model/HoldingsModel");
-
 const { PositionsModel } = require("./model/PositionsModel");
 const { OrdersModel } = require("./model/OrdersModel");
+const { UserModel } = require("./model/UserModel");
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
@@ -187,6 +189,7 @@ app.use(bodyParser.json());
 //   res.send("Done!");
 // });
 
+
 app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
   res.json(allHoldings);
@@ -204,14 +207,60 @@ app.post("/newOrder", async (req, res) => {
     price: req.body.price,
     mode: req.body.mode,
   });
-
   newOrder.save();
-
   res.send("Order saved!");
 });
 
-app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB started!");
+// 1. User Registration (Signup) Route
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).send("Email and password are required.");
+    }
+    const existingUser = await UserModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send("User with this email already exists.");
+    }
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = new UserModel({ email, password: hashedPassword });
+    await newUser.save();
+    res.status(201).send("User registered successfully.");
+  } catch (error) {
+    res.status(500).send("Server error during registration.");
+  }
 });
+
+// 2. User Login Route
+app.post("/api/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).send("Email and password are required.");
+    }
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(401).send("Invalid credentials.");
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).send("Invalid credentials.");
+    }
+    const payload = { userId: user.id };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
+    res.json({ token });
+  } catch (error) {
+    res.status(500).send("Server error during login.");
+  }
+});
+
+mongoose.connect(uri)
+  .then(() => {
+    console.log("DB Connected!");
+    app.listen(PORT, () => {
+      console.log(`Server Listening on port ${PORT}!`);
+    });
+  })
+  .catch((error) => {
+    console.log("Failed to connect to database.", error);
+  });
