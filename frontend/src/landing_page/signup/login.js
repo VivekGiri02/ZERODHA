@@ -25,16 +25,20 @@ function Login() {
             });
 
             const data = await res.json();
+
             if (res.ok) {
                 alert("Login successful!");
+
+                // ✅ Save user + token if needed
                 localStorage.setItem("user", JSON.stringify({ email }));
+
                 navigate('/');
             } else {
                 alert(`Error: ${data.message || "Invalid credentials"}`);
             }
         } catch (err) {
-            console.error(err);
-            alert("Something went wrong!");
+            console.error("Login error:", err);
+            alert("Network error! Check your internet or server status.");
         }
     };
 
