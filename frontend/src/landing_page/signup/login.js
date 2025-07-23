@@ -29,7 +29,6 @@ function Login() {
             if (res.ok) {
                 alert("Login successful!");
 
-                // ✅ Save user + token if needed
                 localStorage.setItem("user", JSON.stringify({ email }));
 
                 navigate('/');
